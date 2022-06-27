@@ -1,8 +1,8 @@
 # Expensive Tracker
 
-The purpose of the application is to create and store epeisves.
+The purpose of the application is to create and store expensives.
 
-The user can add the exepnsives, filter by year and see nice chart of expensive per month in the year.
+The user can add the exepnsives, filter that expensives by year and see nice chart of expensive per month in the year.
 
 ## Live demo
 
