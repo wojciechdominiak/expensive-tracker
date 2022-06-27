@@ -2,10 +2,10 @@ import styles from "./ExpenseForm.module.css";
 import { useState } from "react";
 
 function ExpenseForm(props) {
-  const [formIsVisible, setFormIsVisible] = useState(false);
   const [title, setTitle] = useState("");
   const [amount, setAmount] = useState("");
   const [date, setDate] = useState("");
+  const [error, setError] = useState();
 
   const titleChangeHandler = (event) => {
     setTitle(event.target.value);
@@ -17,16 +17,23 @@ function ExpenseForm(props) {
     setDate(event.target.value);
   };
 
-  const setTrueFormVisible = () => {
-    setFormIsVisible(true);
-  };
-
-  const setfalseFormVisible = () => {
-    setFormIsVisible(false);
+  const errorHandler = () => {
+    setError(null);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
+    if (
+      title.trim().length === 0 ||
+      amount.trim().length === 0 ||
+      date.trim().length === 0
+    ) {
+      setError({
+        message: "Please enter valid input",
+      });
+      return;
+    }
+
     const enteredExpense = {
       title: title,
       amount: +amount,
@@ -36,12 +43,14 @@ function ExpenseForm(props) {
     setTitle("");
     setAmount("");
     setDate("");
-    setfalseFormVisible();
+    errorHandler();
   };
-  if (!formIsVisible) {
-    return <button onClick={setTrueFormVisible}>Add New Expsense</button>;
-  } else {
-    return (
+
+  return (
+    <div>
+      {error && (
+        <div className={styles["new-expsense__error"]}> {error.message}</div>
+      )}
       <form onSubmit={submitHandler}>
         <div className={styles["new-expense__controls"]}>
           <div className={styles["new-expense__control"]}>
@@ -68,20 +77,18 @@ function ExpenseForm(props) {
               value={date}
               onChange={amountChangeHandler}
               type="date"
-              min="2019-01-01"
-              max="2022-12-31"
+              min="1900-01-01"
+              max="2030-12-31"
             ></input>
           </div>
         </div>
         <div className={styles["new-expense__actions"]}>
-          <button type="button" onClick={setfalseFormVisible}>
-            Cancel
-          </button>
+          <button type="button">Cancel</button>
           <button type="submit">Add Expense</button>
         </div>
       </form>
-    );
-  }
+    </div>
+  );
 }
 
 export default ExpenseForm;

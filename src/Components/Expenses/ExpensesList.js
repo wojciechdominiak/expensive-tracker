@@ -16,7 +16,9 @@ const ExpensesList = (props) => {
       </ul>
     );
   } else {
-    return <h2 className="expenses-list__fallback">Found no expenses</h2>;
+    return (
+      <h2 className={styles["expenses-list__fallback"]}>Found no expenses</h2>
+    );
   }
 };
 
