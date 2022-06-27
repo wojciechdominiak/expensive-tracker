@@ -6,7 +6,7 @@ import { useState } from "react";
 import styles from "./Expenses.module.css";
 
 function Expenses(props) {
-  const [filteredYear, setFilteredYear] = useState("2021");
+  const [filteredYear, setFilteredYear] = useState("2022");
 
   const filterChangeHandler = (year) => {
     setFilteredYear(year);
@@ -20,6 +20,7 @@ function Expenses(props) {
     <Card className={styles.expenses}>
       <div>
         <ExpensesFilter
+          expenses={props.items}
           selected={filteredYear}
           onChangeYear={filterChangeHandler}
         />
