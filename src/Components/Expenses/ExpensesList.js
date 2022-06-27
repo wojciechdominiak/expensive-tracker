@@ -1,10 +1,10 @@
-import "./ExpensesList.css";
+import styles from "./ExpensesList.module.css";
 import ExpenseItem from "./ExpenseItem";
 
 const ExpensesList = (props) => {
   if (props.filteredList.length > 0) {
     return (
-      <ul className="expenses-list">
+      <ul className={styles["expenses-list"]}>
         {props.filteredList.map((item) => (
           <ExpenseItem
             key={item.id}

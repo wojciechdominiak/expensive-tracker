@@ -1,4 +1,4 @@
-import "./ExpenseForm.css";
+import styles from "./ExpenseForm.module.css";
 import { useState } from "react";
 
 function ExpenseForm(props) {
@@ -43,8 +43,8 @@ function ExpenseForm(props) {
   } else {
     return (
       <form onSubmit={submitHandler}>
-        <div className="new-expense__controls">
-          <div className="new-expense__control">
+        <div className={styles["new-expense__controls"]}>
+          <div className={styles["new-expense__control"]}>
             <label>Title</label>
             <input
               value={title}
@@ -52,7 +52,7 @@ function ExpenseForm(props) {
               type="text"
             ></input>
           </div>
-          <div className="new-expense__control">
+          <div className={styles["new-expense__control"]}>
             <label>Amount</label>
             <input
               value={amount}
@@ -62,7 +62,7 @@ function ExpenseForm(props) {
               step="0.01"
             ></input>
           </div>
-          <div className="new-expense__control">
+          <div className={styles["new-expense__control"]}>
             <label>Date</label>
             <input
               value={date}
@@ -73,7 +73,7 @@ function ExpenseForm(props) {
             ></input>
           </div>
         </div>
-        <div className="new-expense__actions">
+        <div className={styles["new-expense__actions"]}>
           <button type="button" onClick={setfalseFormVisible}>
             Cancel
           </button>
