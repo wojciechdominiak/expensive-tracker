@@ -1,21 +1,12 @@
 import styles from "./ExpenseForm.module.css";
-import { useState } from "react";
+import { useState, useRef } from "react";
 
 function ExpenseForm(props) {
-  const [title, setTitle] = useState("");
-  const [amount, setAmount] = useState("");
-  const [date, setDate] = useState("");
-  const [error, setError] = useState();
+  const titleInput = useRef();
+  const amountInput = useRef();
+  const dateInput = useRef();
 
-  const titleChangeHandler = (event) => {
-    setTitle(event.target.value);
-  };
-  const dateChangeHandler = (event) => {
-    setAmount(event.target.value);
-  };
-  const amountChangeHandler = (event) => {
-    setDate(event.target.value);
-  };
+  const [error, setError] = useState();
 
   const errorHandler = () => {
     setError(null);
@@ -24,9 +15,9 @@ function ExpenseForm(props) {
   const submitHandler = (event) => {
     event.preventDefault();
     if (
-      title.trim().length === 0 ||
-      amount.trim().length === 0 ||
-      date.trim().length === 0
+      titleInput.current.value.trim().length === 0 ||
+      amountInput.current.value.trim().length === 0 ||
+      dateInput.current.value.trim().length === 0
     ) {
       setError({
         message: "Please enter valid input",
@@ -35,19 +26,19 @@ function ExpenseForm(props) {
     }
 
     const enteredExpense = {
-      title: title,
-      amount: +amount,
-      date: new Date(date),
+      title: titleInput.current.value,
+      amount: +amountInput.current.value,
+      date: new Date(dateInput.current.value),
     };
     props.onSaveEnteredExpense(enteredExpense);
-    setTitle("");
-    setAmount("");
-    setDate("");
+    titleInput.current.value = "";
+    amountInput.current.value = "";
+    dateInput.current.value = "";
     errorHandler();
   };
 
   return (
-    <div>
+    <>
       {error && (
         <div className={styles["new-expsense__error"]}> {error.message}</div>
       )}
@@ -55,17 +46,12 @@ function ExpenseForm(props) {
         <div className={styles["new-expense__controls"]}>
           <div className={styles["new-expense__control"]}>
             <label>Title</label>
-            <input
-              value={title}
-              onChange={titleChangeHandler}
-              type="text"
-            ></input>
+            <input ref={titleInput} type="text"></input>
           </div>
           <div className={styles["new-expense__control"]}>
             <label>Amount</label>
             <input
-              value={amount}
-              onChange={dateChangeHandler}
+              ref={amountInput}
               type="number"
               min="0.01"
               step="0.01"
@@ -74,8 +60,7 @@ function ExpenseForm(props) {
           <div className={styles["new-expense__control"]}>
             <label>Date</label>
             <input
-              value={date}
-              onChange={amountChangeHandler}
+              ref={dateInput}
               type="date"
               min="1900-01-01"
               max="2030-12-31"
@@ -87,7 +72,7 @@ function ExpenseForm(props) {
           <button type="submit">Add Expense</button>
         </div>
       </form>
-    </div>
+    </>
   );
 }
 
